@@ -1,0 +1,25 @@
+<html>
+<head>
+</head>
+<body>
+    <h1>Hello, this is logger! Your IP is {{ip}}</h1>
+    <h2>request headers data</h2>
+    <table border="10">
+    {% for i, j in headers.items %}
+        <tr>
+            <th>{{i}}</th>
+            <th>{{j}}</th>
+        </tr>
+    {% endfor %}
+    </table>
+    <h2>request meta data</h2>
+    <table border="10">
+    {% for i,j in meta.items %}
+        <tr>
+            <th>{{i}}</th>
+            <th>{{j}}</th>
+        </tr>     
+    {% endfor %}
+    </table>
+</body>
+</html>
