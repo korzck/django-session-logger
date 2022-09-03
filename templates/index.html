@@ -1,16 +1,17 @@
 <html>
 <head>
+    <title>Logger</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
 </head>
 <body>
     <h1>IP logger</h1>
-    <table border="10">
-    {% for i,j in fields.items %}
-    <tr>
-        <th>{{i}}</th>
-        <th>{{j}}</th>
-    </tr> 
-    {% endfor %}
-    </table>
     <h2>Connections:</h2>
     {% for i in connections %}
         <table border="3">
