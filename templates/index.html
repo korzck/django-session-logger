@@ -11,5 +11,30 @@
     </tr> 
     {% endfor %}
     </table>
+    <h2>Connections:</h2>
+    {% for i in connections %}
+        <table border="3">
+            <tr>
+                <th>IP</th>
+                <th>{{i.ip}}</th>
+            </tr>
+            <tr>
+                <th>Shell</th>
+                <th>{{i.shell}}</th>
+            </tr>
+            <tr>
+                <th>User agent</th>
+                <th>{{i.user_agent}}</th>
+            </tr>
+            <tr>
+                <th>Language</th>
+                <th>{{i.accept_language}}</th>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <th>{{i.country}}</th>
+            </tr>
+        </table>
+    {% endfor %}
 </body>
 </html>

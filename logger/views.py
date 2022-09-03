@@ -1,23 +1,35 @@
-from copy import copy
-from typing import Dict
 from django.http import HttpResponse
 from django.shortcuts import render
+from .models import Connection
 
-def index(request):
-    headers = copy(request.headers)
-    # for i in headers:
-    #     i = str(i).replace('-', '_')
-    ip = get_client_ip(request)
-    meta = request.META
-    
+def index(request):  
     fields = {}
-    fields['IP'] = ip
-    fields['Shell'] = meta['SHELL']
-    fields['User agent'] = headers['User-Agent']
-    fields['Accept language'] = headers['Accept-Language']
+    fields['IP'] = get_client_ip(request)
+    try:
+        fields['Shell'] = request.META['SHELL']
+    except:
+        fields['Shell'] = 'None'
+    fields['User agent'] = request.headers['User-Agent']
+    fields['Accept language'] = request.headers['Accept-Language']
     fields['Country'] = ''
 
-    return render(request, 'index.html', context={'fields':fields})
+    connection = Connection.objects.create(
+            ip=fields['IP'],
+            shell = fields['Shell'],
+            user_agent = fields['User agent'],
+            accept_language = fields['Accept language'],
+            country = fields['Country']
+        )
+    connection.save()
+
+    if Connection.objects.all().count() > 100:
+        for i in Connection.objects.all():
+            if i.id > 100:
+                i.delete()
+    print(Connection.objects.all())
+            
+
+    return render(request, 'index.html', context={'fields':fields, 'connections':Connection.objects.all()[:10]})
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
